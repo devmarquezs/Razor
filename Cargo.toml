@@ -7,3 +7,7 @@ edition = "2021"
 [dependencies]
 #Gráficos
 ggez = "0.6"
+
+[lib]
+name = "core"
+path = "src/core/lib.rs"
