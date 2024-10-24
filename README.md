@@ -39,7 +39,7 @@ bibliotecas estão atualizadas e ajustadas.
 
 # bash
 ```
-git clone https://github.com/seu-usuario/razor-base.git
+git clone [url do repositorio]
 cd razor-base
 cargo build
 cargo run
