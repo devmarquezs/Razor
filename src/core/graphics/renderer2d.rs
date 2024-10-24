@@ -2,12 +2,15 @@ extern crate ggez;
 use ggez::{Context, GameResult};
 use ggez::graphics::{self, Color, DrawParam, Image, /*Rect,*/ Text, TextFragment, Font, PxScale};
 
+// Estrutura para gerenciar a renderização 2D
 pub struct Renderer2D {
     image: Image,
     welcome_text: Text,
 }
 
+
 impl Renderer2D {
+    // Inicializa o renderizador com uma imagem de boas-vindas e texto
     pub fn new(ctx: &mut Context) -> GameResult<Self> {
         let image = Image::new(ctx, "/images/welcome.png")?;
         let font = Font::new(ctx, "/fonts/TheyPerished.ttf")?; 
@@ -21,11 +24,9 @@ impl Renderer2D {
 
         Ok(Renderer2D { image, welcome_text })
     }
-
+    // Função de desenho que renderiza a imagem e o texto de boas-vindas
     pub fn draw(&self, ctx: &mut Context) -> GameResult<()> {
         graphics::clear(ctx, Color::WHITE);
-        
-        //funções de desenho
 
         // Obtenha as dimensões da janela
         let screen_coordinates = graphics::screen_coordinates(ctx);
@@ -55,7 +56,7 @@ impl Renderer2D {
         graphics::draw(ctx, &rect_mesh, DrawParam::default())?;
         */
 
-        //desenhando um texto na cor preta
+        //desenhando um texto
         let text_position = [screen_width / 2.0, screen_height / 2.0];
         graphics::draw(ctx, &self.welcome_text, DrawParam::default().dest(text_position).offset([0.5, 0.5]))?;
         
