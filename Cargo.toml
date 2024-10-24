@@ -9,5 +9,5 @@ edition = "2021"
 ggez = "0.6"
 
 [lib]
-name = "core"
-path = "src/core/lib.rs"
+name = "razor"
+path = "src/lib.rs"

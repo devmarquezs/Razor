@@ -1,27 +1,45 @@
 extern crate ggez;
-use ggez::{Context, ContextBuilder, GameResult, GameError};
+use ggez::{graphics, Context, ContextBuilder, GameError, GameResult};
 use ggez::event::{self, EventHandler};
-use core::graphics::renderer2d::Renderer2D;
+use ggez::graphics::Color;
+use razor::core::graphics::renderer2d::Renderer2D;
+use razor::ecs::entity::Entity;
+use razor::ecs::component::{Position, Velocity, Sprite};
+use razor::ecs::system::System;
 
 struct MainState {
     renderer: Renderer2D,
+    ecs_system: System,
 }
 
 impl MainState {
     fn new(ctx: &mut Context) -> GameResult<MainState> {
-        let state = MainState {
-            renderer: Renderer2D::new(ctx)?,
-        };
-        Ok(state)
+        let renderer = Renderer2D::new(ctx)?;
+        let mut ecs_system = System::new();
+        
+        // Adicionando uma entidade com posição, velocidade e sprite
+        let entity = Entity::new(1);
+        let position = Position { x: 100.0, y: 100.0 };
+        let velocity = Velocity { dx: 1.0, dy: 1.0 };
+        let sprite = Sprite { texture: "/images/welcome.png".to_string() };
+        ecs_system.add_entity(entity, position, velocity, sprite);
+        
+        Ok(MainState {
+            renderer,
+            ecs_system,
+        })
     }
 }
 
 impl EventHandler<GameError> for MainState {
     fn update(&mut self, _ctx: &mut Context) -> Result<(), GameError> {
+        self.ecs_system.update();
         Ok(())
     }
 
     fn draw(&mut self, ctx: &mut Context) -> Result<(), GameError> {
+        graphics::clear(ctx, Color::WHITE);
+        self.ecs_system.render(ctx)?;
         self.renderer.draw(ctx)
     }
 }
